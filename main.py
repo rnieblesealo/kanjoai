@@ -110,10 +110,14 @@ def evaluate_model(model, test_loader):
 
 # WARN: ------------------------------
 
+# TODO: fill in later when we have data
+test_landmarks = None
+test_labels = None
+
 # run training
 test_dataset = LandmarkEmotionDataset(test_landmarks, test_labels)
 test_loader = DataLoader(test_dataset, batch_size=32, shuffle=False)
 
-train_model(model, train_loader, num_epochs=10)
+train_model(model, test_loader, num_epochs=10)
 
 evaluate_model(model, test_loader)
