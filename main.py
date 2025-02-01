@@ -115,8 +115,8 @@ test_landmarks = None
 test_labels = None
 
 # run training
-test_dataset = LandmarkEmotionDataset(test_landmarks, test_labels)
-test_loader = DataLoader(test_dataset, batch_size=32, shuffle=False)
+train_dataset = LandmarkEmotionDataset(test_landmarks, test_labels)
+train_loader = DataLoader(test_dataset, batch_size=32, shuffle=False)
 
 train_model(model, test_loader, num_epochs=10)
 
