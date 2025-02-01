@@ -90,6 +90,18 @@ def train_model(model, train_loader, num_epochs=10):
 
 # WARN: -- copied straight from gpt --
 
+
+# TODO: fill in later when we have data
+train_landmarks = None
+train_labels = None
+
+# run training
+train_dataset = LandmarkEmotionDataset(train_landmarks, train_labels)
+train_loader = DataLoader(train_dataset, batch_size=32, shuffle=False)
+
+train_model(model, train_loader, num_epochs=10)
+
+
 def evaluate_model(model, test_loader):
     model.eval()  # Set model to evaluation mode
     correct = 0
@@ -110,14 +122,8 @@ def evaluate_model(model, test_loader):
 
 # WARN: ------------------------------
 
-# TODO: fill in later when we have data
-test_landmarks = None
-test_labels = None
+evaluate_model(model, train_loader)
 
-# run training
+# setup testing
 test_dataset = LandmarkEmotionDataset(test_landmarks, test_labels)
 test_loader = DataLoader(test_dataset, batch_size=32, shuffle=False)
-
-train_model(model, test_loader, num_epochs=10)
-
-evaluate_model(model, test_loader)
