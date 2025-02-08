@@ -13,7 +13,7 @@ def detect_face_landmarks(image):
     """
     Processes 1 face in the provided image and returns its landmarks
     Landmarks are x, y cordinates normalized between 0 and 1 and then multiplied by img. width and height
-    Normalization helps adapt all coordinates to one space, regardless of src. image size 
+    Normalization helps adapt all coordinates to one space, regardless of src. image size
     """
 
     output = []
@@ -42,7 +42,7 @@ def detect_face_landmarks(image):
 
 def process_dataset(dataset_path, subfolder_names, csv_output_path):
     """
-    Process batch of images, 
+    Process batch of images,
     detecting facial landmarks to each and saving results to CSV file.
     """
 
@@ -92,5 +92,9 @@ def process_dataset(dataset_path, subfolder_names, csv_output_path):
 
 
 # download straight from kaggle!
-path = kagglehub.dataset_download("msambare/fer2013")
-process_dataset(path, ["angry", "neutral"], "face_train_landmarks.csv")
+train_data_path = f"{kagglehub.dataset_download("msambare/fer2013")}/train"
+process_dataset(
+    train_data_path,
+    ["angry", "neutral"],
+    "face_train_landmarks.csv"
+)
