@@ -2,7 +2,7 @@ import torch
 import torch.nn as neural_network
 import torch.optim as optim
 from torch.utils.data import Dataset, DataLoader
-
+import pandas as pd
 
 input_dimension = 468  # Amount of mediapipe landmarks
 
@@ -32,13 +32,14 @@ class LandmarkEmotionModel(neural_network.Module):
         # sigmoid for last layer to obtain continuous result
         x = torch.sigmoid(self.output_layer(x))
 
-        return x
+        # NOTE: suggest using softmax (output sums to 1);
+        # is better for binary classification
 
-# WARN: -- copied straight from gpt --
+        return x
 
 
 class LandmarkEmotionDataset(Dataset):
-    def init(self, landmarks, labels):
+    def __init__(self, landmarks, labels):
         """
         :param landmarks: List or array of flattened landmarks (shape: num_samples x 1404)
         :param labels: List or array of labels (0 for neutral, 1 for angry) (shape: num_samples)
@@ -48,13 +49,12 @@ class LandmarkEmotionDataset(Dataset):
         # Convert labels to tensor
         self.labels = torch.tensor(labels, dtype=torch.float32)
 
-    def len(self):
+    # NOTE: override len so we can use len(<LandmarkEmotionDataset>)
+    def __len__(self):
         return len(self.landmarks)
 
-    def getitem(self, idx):
+    def __getitem__(self, idx):
         return self.landmarks[idx], self.labels[idx]
-
-# WARN: ------------------------------
 
 
 model = LandmarkEmotionModel()
@@ -88,11 +88,19 @@ def train_model(model, train_loader, num_epochs=10):
             f"Epoch {epoch + 1}/{num_epochs}, Loss: {running_loss / len(train_loader)}")
 
 
-# WARN: -- copied straight from gpt --
+# load training data-----------------------------
 
+# get filepath to csv (ensure we run getdataset!)
+csv_landmarks_path = "./face_train_landmarks.csv"
 
-# TODO: fill in later when we have data
-train_landmarks = None
+# read produced csv
+train_landmarks = pd.read_csv(csv_landmarks_path)
+
+# -----------------------------------------------
+
+# WARN: idk what ANY of the below means so its gonna be quarantined for now!
+
+"""
 train_labels = None
 
 # run training
@@ -100,7 +108,6 @@ train_dataset = LandmarkEmotionDataset(train_landmarks, train_labels)
 train_loader = DataLoader(train_dataset, batch_size=32, shuffle=False)
 
 train_model(model, train_loader, num_epochs=10)
-
 
 def evaluate_model(model, test_loader):
     model.eval()  # Set model to evaluation mode
@@ -119,9 +126,6 @@ def evaluate_model(model, test_loader):
     accuracy = 100 * correct / total
     print(f"Test Accuracy: {accuracy}%")
 
-
-# WARN: ------------------------------
-
 evaluate_model(model, train_loader)
 
 # run training
@@ -131,3 +135,4 @@ test_loader = DataLoader(test_dataset, batch_size=32, shuffle=False)
 train_model(model, test_loader, num_epochs=10)
 
 evaluate_model(model, test_loader)
+"""
