@@ -1,57 +1,31 @@
-# Byte-compiled / optimized / DLL files
-*.py[cod]
-__pycache__/
+# Python bytecode files
+*.pyc
+*.pyo
+__pycache__
+
+# Pipenv
+Pipfile.lock
+venv/
+.env/
 
 # Virtual environments
+.env
+.venv
 venv/
-ENV/
-env/
-*.venv/
 
-# Python egg and distribution files
-.eggs/
-*.egg-info/
-dist/
-build/
-*.pyc
-
-# Jupyter Notebook checkpoints
-.ipynb_checkpoints
-
-# PyCharm project files
-.idea/
-
-# VS Code project files
-.vscode/
-
-# MacOS system files
+# macOS
 .DS_Store
 
-# Windows system files
+# Windows
 Thumbs.db
+desktop.ini
 
-# Pytest cache
-.cache/
-
-# Coverage directory used by tools like pytest-cov
-.coverage
-.coverage.*
-
-# Log files
-*.log
-
-# Environment variable files
-.env
-.env.*
-
-# Pycharm configuration files
+# IDEs and text editors
 .idea/
+.vscode/
+*.swp
 
-# .tox, .nox, .coverage, and other testing-related files
-.nox/
-.tox/
-.coverage
-nosetests.xml
-coverage.xml
-*.coveragerc
+
+
+# Project specific
 face_train_landmarks.csv

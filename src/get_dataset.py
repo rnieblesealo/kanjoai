@@ -1,3 +1,4 @@
+import kagglehub
 import cv2
 import mediapipe as mp
 import numpy as np
@@ -6,10 +7,15 @@ import csv
 
 # Initialize MediaPipe Face Mesh
 mp_face_mesh = mp.solutions.face_mesh
-mp_drawing = mp.solutions.drawing_utils  # For drawing the landmarks
 
 
 def detect_face_landmarks(image):
+    """
+    Processes 1 face in the provided image and returns its landmarks
+    Landmarks are x, y cordinates normalized between 0 and 1 and then multiplied by img. width and height
+    Normalization helps adapt all coordinates to one space, regardless of src. image size 
+    """
+
     output = []
 
     # Convert BGR to RGB (required by MediaPipe)
@@ -28,15 +34,18 @@ def detect_face_landmarks(image):
         # Process landmarks
         for face_landmarks in results.multi_face_landmarks:
             for i, landmark in enumerate(face_landmarks.landmark):
-                x, y = int(landmark.x * w), int(landmark.y * h)  # Convert to pixel coordinates
+                # Convert to pixel coordinates
+                x, y = int(landmark.x * w), int(landmark.y * h)
                 output.append((x, y))
-
     return output
 
 
-
-
 def process_dataset(dataset_path, subfolder_names, csv_output_path):
+    """
+    Process batch of images, 
+    detecting facial landmarks to each and saving results to CSV file.
+    """
+
     # Open the CSV file in write mode
     with open(csv_output_path, mode='w', newline='') as file:
         writer = csv.writer(file)
@@ -75,10 +84,13 @@ def process_dataset(dataset_path, subfolder_names, csv_output_path):
 
                 # Write the dynamic label followed by each landmark as a separate column
                 row = [label]
-                row.extend(flattened_landmarks)  # Append all the landmark values
+                # Append all the landmark values
+                row.extend(flattened_landmarks)
                 writer.writerow(row)
 
     print(f"CSV file has been saved to {csv_output_path}")
 
-path = "./Dataset/train"
+
+# download straight from kaggle!
+path = kagglehub.dataset_download("msambare/fer2013")
 process_dataset(path, ["angry", "neutral"], "face_train_landmarks.csv")
