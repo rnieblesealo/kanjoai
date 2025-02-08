@@ -124,6 +124,10 @@ def evaluate_model(model, test_loader):
 
 evaluate_model(model, train_loader)
 
-# setup testing
+# run training
 test_dataset = LandmarkEmotionDataset(test_landmarks, test_labels)
 test_loader = DataLoader(test_dataset, batch_size=32, shuffle=False)
+
+train_model(model, test_loader, num_epochs=10)
+
+evaluate_model(model, test_loader)
