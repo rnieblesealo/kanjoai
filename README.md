@@ -1,3 +1,11 @@
+# Getting Started
+
+1. Install **Pipenv** if not in already: `pip install pipenv`
+2. Run `pipenv install` to create a virtual environment and get all deps set up
+3. You should now be able to run the `.py` files normally!
+
+---
+
 ![logo](./github/kanjo-logo.gif)
 
 **Games make us feel a lot of things.**
