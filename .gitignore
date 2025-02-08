@@ -28,4 +28,4 @@ desktop.ini
 
 
 # Project specific
-face_train_landmarks.csv
+*.csv

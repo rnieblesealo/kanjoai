@@ -50,51 +50,65 @@ def process_dataset(dataset_path, subfolder_names, csv_output_path):
     with open(csv_output_path, mode='w', newline='') as file:
         writer = csv.writer(file)
 
-        # Loop through each subfolder (emotion or category)
-        for subfolder_name in subfolder_names:
-            if subfolder_name == "angry":
-                label = 1
-            else:
-                label = 0
+        for folder in ['test', 'train']:
+            test_and_train_path = os.path.join(dataset_path, folder)
 
-            subfolder_path = os.path.join(dataset_path, subfolder_name)
+            # Loop through each subfolder (emotion or category)
+            for subfolder_name in subfolder_names:
+                if subfolder_name == "angry":
+                    label = 1
+                else:
+                    label = 0
 
-            # Check if subfolder exists
-            if not os.path.exists(subfolder_path):
-                print(f"Subfolder {subfolder_name} not found.")
-                continue
+                subfolder_path = os.path.join(test_and_train_path, subfolder_name)
 
-            # Loop through all images in the subfolder
-            for filename in os.listdir(subfolder_path):
-                image_path = os.path.join(subfolder_path, filename)
-                image = cv2.imread(image_path)
-
-                # Check if the image is valid
-                if image is None:
+                # Check if subfolder exists
+                if not os.path.exists(subfolder_path):
+                    print(f"Subfolder {subfolder_name} not found.")
                     continue
 
-                landmarks = detect_face_landmarks(image)  # Detect landmarks
+                # Loop through all images in the subfolder
+                for filename in os.listdir(subfolder_path):
+                    image_path = os.path.join(subfolder_path, filename)
+                    image = cv2.imread(image_path)
 
-                # If no landmarks are detected, skip the image
-                if len(landmarks) == 0:
-                    continue
+                    # Check if the image is valid
+                    if image is None:
+                        continue
 
-                landmarks_array = np.array(landmarks)
-                flattened_landmarks = landmarks_array.flatten()
+                    # preview image
+                    # cv2.imshow("image", image)
+                    # cv2.waitKey(0)
 
-                # Write the dynamic label followed by each landmark as a separate column
-                row = [label]
-                # Append all the landmark values
-                row.extend(flattened_landmarks)
-                writer.writerow(row)
+                    landmarks = detect_face_landmarks(image)  # Detect landmarks
+
+                    # If no landmarks are detected, skip the image
+                    if len(landmarks) == 0:
+                        continue
+
+                    landmarks_array = np.array(landmarks)
+                    flattened_landmarks = landmarks_array.flatten()
+
+                    # Write the dynamic label followed by each landmark as a separate column
+                    row = [label]
+                    # Append all the landmark values
+                    row.extend(flattened_landmarks)
+                    writer.writerow(row)
 
     print(f"CSV file has been saved to {csv_output_path}")
 
 
+
+
+
 # download straight from kaggle!
-train_data_path = f"{kagglehub.dataset_download("msambare/fer2013")}/train"
+dataset_path = f"{kagglehub.dataset_download('msambare/fer2013')}"
+folders = ["angry", "neutral"]
+output_path = "../data/face_landmarks.csv"
+
 process_dataset(
-    train_data_path,
-    ["angry", "neutral"],
-    "face_train_landmarks.csv"
+    dataset_path,
+    folders,
+    output_path
 )
+
