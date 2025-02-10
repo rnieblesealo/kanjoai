@@ -35,7 +35,6 @@ class FaceLandmarks:
                     x, y = int(landmark.x * w), int(landmark.y * h)
                     output.append((x, y))
 
-        landmarks_array = np.array(output)
-        flattened_landmarks = landmarks_array.flatten()
 
-        return flattened_landmarks
+
+        return output

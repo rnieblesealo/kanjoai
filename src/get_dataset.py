@@ -51,11 +51,13 @@ def process_dataset(dataset_path, subfolder_names, csv_output_path):
                     if len(landmarks) == 0:
                         continue
 
+                    landmarks_array = np.array(landmarks)
+                    flattened_landmarks = landmarks_array.flatten()
 
                     # Write the dynamic label followed by each landmark as a separate column
                     row = [label]
                     # Append all the landmark values
-                    row.extend(landmarks)
+                    row.extend(flattened_landmarks)
                     writer.writerow(row)
 
     print(f"CSV file has been saved to {csv_output_path}")
