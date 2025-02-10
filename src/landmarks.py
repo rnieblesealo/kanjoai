@@ -1,5 +1,6 @@
 import cv2
 import mediapipe as mp
+import numpy as np
 
 
 
@@ -33,4 +34,8 @@ class FaceLandmarks:
                     # Convert to pixel coordinates
                     x, y = int(landmark.x * w), int(landmark.y * h)
                     output.append((x, y))
-        return output
+
+        landmarks_array = np.array(output)
+        flattened_landmarks = landmarks_array.flatten()
+
+        return flattened_landmarks
