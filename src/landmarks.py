@@ -5,7 +5,7 @@ import numpy as np
 
 
 class FaceLandmarks:
-    def detect_face_landmarks(image):
+    def detect_face_landmarks(self, image):
         """
         Processes 1 face in the provided image and returns its landmarks
         Landmarks are x, y cordinates normalized between 0 and 1 and then multiplied by img. width and height
