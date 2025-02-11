@@ -45,7 +45,8 @@ def process_dataset(dataset_path, subfolder_names, csv_output_path):
                     # cv2.imshow("image", image)
                     # cv2.waitKey(0)
 
-                    landmarks = FaceLandmarks.detect_face_landmarks(image)  # Detect landmarks
+                    face_landmarks_detector = FaceLandmarks()  # Create an instance
+                    landmarks = face_landmarks_detector.detect_face_landmarks(image=image)  # Call the method properly
 
                     # If no landmarks are detected, skip the image
                     if len(landmarks) == 0:
@@ -68,7 +69,16 @@ def process_dataset(dataset_path, subfolder_names, csv_output_path):
 
 # download straight from kaggle!
 dataset_path = f"{kagglehub.dataset_download('msambare/fer2013')}"
-folders = ["angry", "neutral"]
+folders = []
+
+folders.append("angry")
+folders.append("disgust")
+folders.append("fear")
+folders.append("happy")
+folders.append("neutral")
+folders.append("sad")
+folders.append("surprise")
+
 output_path = "../data/face_landmarks.csv"
 
 process_dataset(
@@ -76,4 +86,6 @@ process_dataset(
     folders,
     output_path
 )
+
+# Need more angry images
 
