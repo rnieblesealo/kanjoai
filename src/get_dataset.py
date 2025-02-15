@@ -73,10 +73,10 @@ folders = []
 
 folders.append("angry")
 folders.append("disgust")
-folders.append("fear")
+# folders.append("fear")
 folders.append("happy")
-folders.append("neutral")
-folders.append("sad")
+# folders.append("neutral")
+# folders.append("sad")
 folders.append("surprise")
 
 output_path = "../data/face_landmarks.csv"
