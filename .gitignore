@@ -29,3 +29,6 @@ desktop.ini
 
 # Project specific
 *.csv
+.ipynb_checkpoints/
+*.pt
+*.pth
